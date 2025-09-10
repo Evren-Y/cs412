@@ -1,0 +1,20 @@
+{% load static %}
+<html>
+    <head>
+        <title> Napoleon Quotes </title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li><a href="{% url 'quote_page' %}">Quote</a></li>
+            <li><a href="{% url 'show_all_page' %}">Show All</a></li>
+            <li><a href="{% url 'about_page' %}">About</a></li>
+        </nav>
+        <h1>Napoleon Quotes</h1>
+        {% block content %}
+        {% endblock %}
+        <footer>
+            Created by Evren Yaman at {{time}}.
+        </footer>
+    </body>
+</html>
