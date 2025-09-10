@@ -22,17 +22,6 @@ images = [
 
 time = time.ctime()
 
-def home_page(request):
-    '''Function to respond to the "home" request.'''
-
-    template_name = 'quotes/home.html'
-    context = {
-        "quote": quotes[random.randint(1,4)-1],
-        "image": images[random.randint(1,4)-1],
-        "time": time,
-    }
-    return render(request, template_name, context)
-
 def quote(request):
     '''Function to respond to the "quote" request.'''
 
