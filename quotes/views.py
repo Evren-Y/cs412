@@ -14,10 +14,10 @@ quotes = [
 ]
 
 images = [
-    "quotes/napoleon_one.jpg",
-    "quotes/napoleon_two.jpg",
-    "quotes/napoleon_three.jpg",
-    "quotes/napoleon_four.jpg",
+    "https://dreamsinparis.com/wp-content/uploads/2022/08/Painting-of-Napoleon-873x1024.jpg",
+    "https://dreamsinparis.com/wp-content/uploads/2023/05/Napoleons-retreat-from-moscow-1024x780.jpg",
+    "https://dreamsinparis.com/wp-content/uploads/2023/05/Napoleon-at-the-Battle-of-Wagram-1024x755.jpg",
+    "https://dreamsinparis.com/wp-content/uploads/2023/05/Napoleons-Return-from-Elba-1024x766.jpg",
 ]
 
 time = time.ctime()
@@ -40,7 +40,7 @@ def quote(request):
     context = {
         "quote": quotes[random.randint(1,4)-1],
         "image": images[random.randint(1,4)-1],
-        
+        "time": time,
     }
     return render(request, template_name, context)
 

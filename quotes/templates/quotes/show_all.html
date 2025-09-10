@@ -1,12 +1,17 @@
 {% extends 'quotes/base.html' %}
 
     {% block content %}
-    <h2>Napoleon Quotes</h2>
-    <p>
-        {{quotes}}
-    </p>
+    <h2>Famous Quotes</h2>
+    <ul>
+        {% for quote in quotes %}
+            <li>{{ quote }}</li>
+        {% endfor %}
+    </ul>
+
     <h2>Napoleon Images</h2>
-    <p>
-        {{images}}
-    </p>
+    <ul>
+        {% for image in images %}
+            <img src="{{ image }}" alt="Napoleon">
+        {% endfor %}
+    </ul>
     {% endblock %}
