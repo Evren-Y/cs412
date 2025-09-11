@@ -1,127 +1,79 @@
 /* File: styles.css */
 /* Author: Evren Yaman */
+/* Theme: Green, Yellow, White/Creme */
 
-:root{
-    --bg: #aafa9a;              /* very light green background */
-    --card: #ffffff;            /* white panels/cards */
-    --muted-yellow: #f5e17f;    /* mild yellow accent band */
-    --accent: #5aa469;          /* soft leaf green (links, accents) */
-    --accent-dark: #2f6d3a;     /* darker green for headings */
-    --text: #33403c;            /* dark desaturated green-gray text */
-    --border: #97dba1;          /* subtle greenish border */
-    --shadow: 0 2px 10px rgba(47, 109, 58, 0.06);
-}
-
-/* Page base */
+/* Base page */
 body {
-    background-color: var(--bg);
-    color: var(--text);
-    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #fdfdf7;         /* soft white/cream */
+    color: #2e3b2d;                   /* dark greenish text */
+    font-family: "Segoe UI", Arial, sans-serif;
     line-height: 1.6;
     max-width: 960px;
     margin: 20px auto;
     padding: 0 20px;
 }
 
-/* Headings */
-h1, h2, h3, h4, h5 {
-    font-weight: 600;
-    background: var(--muted-yellow);
-    margin: 0;
-    padding: 0.35rem 0.6rem;
-    border-radius: 10px;
-}
-
-/* Links */
-a, a:visited {
-    color: var(--accent);
-    text-decoration: none;
-    transition: color .15s ease, background-color .15s ease, box-shadow .15s ease;
-}
-
-a:hover, a:focus-visible {
-    color: var(--accent-dark);
-    background-color: #ffffff;
-    outline: none;
-    box-shadow: inset 0 -0.35em 0 rgba(90,164,105,0.12);
-}
-
-/* Footer */
-footer {
-    width: 100%;
-    background: var(--muted-yellow);
-    color: var(--accent-dark);
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 10px 16px;
-    border-top: 1px solid var(--border);
-    box-shadow: var(--shadow);
-}
-
-/* Wrapper (content area) */
-.wrapper {
-    max-width: 100%;
-    position: relative;
-    top: 16px;
-    scroll-padding-top: 100px;
-    padding-bottom: 70px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: var(--shadow);
-    padding: 18px;
-}
-
-div.wrapper h1 {
-    text-align: center;
-    color: var(--accent-dark);
-    margin: 10px auto 14px auto;
-    font-size: 2.1em;
-}
-
-div.wrapper h2 {
-    text-align: left;
-    color: var(--accent-dark);
-    margin: 12px 0 8px 0;
-    font-size: 1.5em;
-}
-
-/* Nav */
+/* Navigation bar */
 nav {
-    justify-self: end;
-    background: transparent;
-    color: var(--accent-dark);
-    padding: 8px 0;
-    margin-bottom: 8px;
-    border-bottom: 1px solid var(--border);
+    background-color: #f6f2cf;        /* light yellow */
+    border-bottom: 2px solid #a5d6a7; /* soft green border */
+    padding: 10px;
+    text-align: right;
 }
 
 nav li {
     display: inline-block;
-    margin-left: 14px;
+    margin-left: 20px;
     list-style: none;
 }
 
-nav li a {
-    display: inline-block;
+nav a {
+    color: #3b7d3b;                   /* leaf green */
+    text-decoration: none;
+    font-weight: 500;
     padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
 }
 
-nav li a:hover, nav li a:focus-visible {
-    background: #ffffff;
-    border-color: var(--border);
-    box-shadow: var(--shadow);
+nav a:hover {
+    background-color: #dcedc8;        /* pale green highlight */
+    color: #1b5e20;                   /* darker green */
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 10px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+/* Main wrapper */
+.wrapper {
+    background-color: #ffffff;        /* white content area */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Headings */
+h1 {
+    text-align: center;
+    color: #2e7d32;                   /* dark green */
+    background-color: #f6f2cf;        /* mild yellow */
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0 0 20px 0;
+}
+
+/* Paragraphs */
+p {
+    margin: 12px 0;
+    color: #37493f;
+}
+
+/* Footer */
+footer {
+    background-color: #f6f2cf;
+    color: #2e7d32;
+    text-align: center;
+    padding: 12px;
+    margin-top: 30px;
+    border-top: 2px solid #a5d6a7;
+    font-size: 0.9em;
 }
