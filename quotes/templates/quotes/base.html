@@ -1,3 +1,7 @@
+<!-- File: base.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 9/11/2025 -->
+<!-- Description: This is the html that is standard across every page in the web application. It uses the styles.css stylesheet from the -->
+<!-- static folder. It provides a header, footer, and nav bar for every page. -->
 {% load static %}
 <html>
     <head>
@@ -13,6 +17,7 @@
         <div class="wrapper">
             <h1>Napoleon Quotes</h1>
             {% block content %}
+            <!-- html from the other pages that extend from this base.html file -->
             {% endblock %}
         </div>
         <footer>

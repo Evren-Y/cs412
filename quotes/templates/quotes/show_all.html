@@ -1,8 +1,12 @@
+<!-- File: show_all.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 9/11/2025 -->
+<!-- Description: extends the base.html file and renders the global quotes and images list from the views.py file using iteration. -->
 {% extends 'quotes/base.html' %}
 
     {% block content %}
     <h2>Famous Quotes</h2>
     <ul>
+        <!-- Loops through all the entries in the variable quote list and outputs each string as a list item. -->
         {% for quote in quotes %}
             <li>{{ quote }}</li>
         {% endfor %}
@@ -10,6 +14,7 @@
 
     <h2>Napoleon Images</h2>
     <ul>
+        <!-- Loops through all the entries in the variable image list and outputs each image url string -->
         {% for image in images %}
             <img src="{{ image }}" alt="Napoleon" style="max-width: 100%; height: auto;">
         {% endfor %}
