@@ -9,6 +9,13 @@ import random
 
 # Create your views here.
 
+specials = [
+    "",
+    "",
+    "",
+    "",
+]
+
 # Gets the current time
 time = time.ctime()
 
@@ -21,7 +28,11 @@ def main(request):
 
     template_name = 'restaurant/main.html'
 
-    return render(request, template_name)
+    context = {
+        "time": time,
+    }
+
+    return render(request, template_name, context)
 
 def order(request):
     '''Function to respond to the "order" request.
@@ -29,7 +40,12 @@ def order(request):
 
     template_name = 'restaurant/order.html'
 
-    return render(request, template_name)
+    context = {
+        "time": time,
+        "special": specials[random.randint(1,4)-1]
+    }
+
+    return render(request, template_name, context)
 
 def confirmation(request):
     '''Function to respond to the "show_all" request.
@@ -37,4 +53,8 @@ def confirmation(request):
 
     template_name = 'restaurant/confirmation.html'
 
-    return render(request, template_name)
+    context = {
+        "time": time,
+    }
+
+    return render(request, template_name, context)

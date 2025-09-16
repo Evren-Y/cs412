@@ -5,7 +5,7 @@
  {% load static %}
  <html>
     <head>
-        <title> My Restaurant </title>
+        <title> Mountain House | Allston </title>
         <link rel="stylesheet" href="{% static 'styles.css' %}">
     </head>
     <body>
@@ -14,12 +14,13 @@
             <li><a href="{% url 'order_page' %}">Order</a></li>
         </nav>
         <div class="wrapper">
-            <h1>Restaurant Name</h1>
+            <h1> Mountain House </h1>
             {% block content %}
             <!-- html from the other pages that extend from this base.html file -->
             {% endblock %}
         </div>
         <footer>
+            Created by Evren Yaman at {{time}}.
         </footer>
     </body>
 </html>
