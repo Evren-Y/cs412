@@ -13,7 +13,7 @@ import random
 time = time.ctime()
 
 # Randomly generates the expected time at which the order will be ready
-readytime = time.ctime()
+readytime = time
 
 def main(request):
     '''Function to respond to the "main" request.
