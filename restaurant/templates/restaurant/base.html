@@ -1,0 +1,25 @@
+<!-- File: base.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 9/16/2025 -->
+<!-- Description: This is the html that is standard across every page in the web application. It uses the styles.css stylesheet from the -->
+<!-- static folder. -->
+ {% load static %}
+ <html>
+    <head>
+        <title> My Restaurant </title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li><a href="{% url 'main_page' %}">Main</a></li>
+            <li><a href="{% url 'order_page' %}">Order</a></li>
+        </nav>
+        <div class="wrapper">
+            <h1>Restaurant Name</h1>
+            {% block content %}
+            <!-- html from the other pages that extend from this base.html file -->
+            {% endblock %}
+        </div>
+        <footer>
+        </footer>
+    </body>
+</html>
