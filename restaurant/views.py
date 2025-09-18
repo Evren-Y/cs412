@@ -10,10 +10,10 @@ import random
 # Create your views here.
 
 specials = [
-    "",
-    "",
-    "",
-    "",
+    "Szechuan Pickles",
+    "House Chicken",
+    "Ma-Po Tofu",
+    "Green Spicy Bass",
 ]
 
 # Gets the current time
@@ -35,7 +35,7 @@ def main(request):
     return render(request, template_name, context)
 
 def order(request):
-    '''Function to respond to the "order" request.
+    '''Function to respond to the "order" request. Will show the form to the user.
     '''
 
     template_name = 'restaurant/order.html'
@@ -48,13 +48,31 @@ def order(request):
     return render(request, template_name, context)
 
 def confirmation(request):
-    '''Function to respond to the "show_all" request.
+    '''Function to respond to the order form submission, and renders the results.
     '''
 
     template_name = 'restaurant/confirmation.html'
+    print(request.POST)
 
-    context = {
-        "time": time,
-    }
+    if request.POST:
+        name = request.POST['name']
+        phone = request.POST['phone']
+        email = request.POST['email']
 
-    return render(request, template_name, context)
+        items = request.POST.getlist('item')
+        
+        allergies = request.POST['allergies']
+        instructions = request.POST['instructions']
+
+
+        context = {
+            'name': name,
+            'phone': phone,
+            'email': email,
+            'items': items,
+            'allergies': allergies,
+            'instructions': instructions,
+            "time": time,
+        }
+
+    return render(request, template_name=template_name, context=context)

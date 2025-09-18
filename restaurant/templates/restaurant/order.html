@@ -4,4 +4,53 @@
 {% extends 'restaurant/base.html' %}
 
     {% block content %}
+    <div>
+        <form action="{% url 'confirmation_page' %}" method="POST"> 
+            {% csrf_token %}
+
+            <h3> Personal Information </h3>
+            <div class="menu">
+                Name: <input type="text" name="name">
+                Phone: <input type="text" name="phone">
+                Email: <input type="text" name="email">
+            </div>
+
+            <h3> Menu </h3>
+            <div class="menu">
+                <label>
+                    <input type="checkbox" name="item" value="House Steamed Crab">
+                    House Steamed Crab ($38)
+                </label>
+                <label>
+                    <input type="checkbox" name="item" value="La-Zi Chicken">
+                    La-Zi Chicken ($21)
+                </label>
+                <label>
+                    <input type="checkbox" name="item" value="Hot Spicy Pork Kidney">
+                    Hot Spicy Pork Kidney ($24)
+                </label>
+                <label>
+                    <input type="checkbox" name="item" value="Ma-La Lobster">
+                    Ma-La Lobster ($47)
+                </label>
+
+                <h3> Current Special ($10)</h3>
+                <label>
+                    <input type="checkbox" name="item" value="Special">
+                    {{special}}
+                </label>
+            </div>
+
+            <h3> Allergies </h3>
+            <textarea name="allergies" rows="2" cols="50" style="max-width: 100%"></textarea>
+
+            <h3> Special Instructions </h3>
+            <textarea name="instructions" rows="2" cols="50" style="max-width: 100%"></textarea>
+
+            <h4> Ready to Order! </h4>
+
+            <input type="submit">
+
+        </form>
+    </div>
     {% endblock %}
