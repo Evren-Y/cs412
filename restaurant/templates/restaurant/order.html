@@ -16,30 +16,40 @@
             </div>
 
             <h3> Menu </h3>
-            <div class="menu">
-                <label>
+            <ul>
+                <li>
                     <input type="checkbox" name="item" value="House Steamed Crab">
                     House Steamed Crab ($38)
-                </label>
-                <label>
-                    <input type="checkbox" name="item" value="La-Zi Chicken">
+                </li>
+                <li>
                     La-Zi Chicken ($21)
-                </label>
-                <label>
+                    <ul>
+                        <li>
+                            <input type="checkbox" name="item" value="La-Zi Chicken (Mild)">
+                            Mild
+                        </li>
+                        <li>
+                            <input type="checkbox" name="item" value="La-Zi Chicken (Medium)">
+                            Medium
+                        </li>
+                        <li>
+                            <input type="checkbox" name="item" value="La-Zi Chicken (Spicy)">
+                            Spicy
+                        </li>
+                    </ul>
+                </li>
+                <li>
                     <input type="checkbox" name="item" value="Hot Spicy Pork Kidney">
                     Hot Spicy Pork Kidney ($24)
-                </label>
-                <label>
+                </li>
+                <li>
                     <input type="checkbox" name="item" value="Ma-La Lobster">
                     Ma-La Lobster ($47)
-                </label>
-
-                <h3> Current Special ($10)</h3>
-                <label>
-                    <input type="checkbox" name="item" value="Special">
-                    {{special}}
-                </label>
-            </div>
+                </li>
+            </ul>
+            <h3> Current Special ($10)</h3>
+            <input type="checkbox" name="item" value="Special">
+            {{special}}
 
             <h3> Allergies </h3>
             <textarea name="allergies" rows="2" cols="50" style="max-width: 100%"></textarea>

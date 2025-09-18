@@ -12,7 +12,9 @@ import random
 pricing = {
     "Special": 10,
     "House Steamed Crab": 38,
-    "La-Zi Chicken": 21,
+    "La-Zi Chicken (Mild)": 21,
+    "La-Zi Chicken (Medium)": 21,
+    "La-Zi Chicken (Spicy)": 21,
     "Hot Spicy Pork Kidney": 24,
     "Ma-La Lobster": 47,
 }
