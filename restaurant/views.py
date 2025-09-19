@@ -9,6 +9,7 @@ import random
 
 # Create your views here.
 
+# Price dictionary mapping menu items to their prices
 pricing = {
     "Special": 10,
     "House Steamed Crab": 38,
@@ -19,6 +20,7 @@ pricing = {
     "Ma-La Lobster": 47,
 }
 
+# List of rotating specials (one is chosen randomly each time order page is loaded)
 specials = [
     "Szechuan Pickles",
     "House Chicken",
@@ -50,6 +52,7 @@ def order(request):
     # Gets the current time
     current_time = time.ctime()
 
+    # Select a random special from the specials list
     context = {
         "time": current_time,
         "special": specials[random.randint(1,4)-1]
@@ -72,19 +75,24 @@ def confirmation(request):
     readytime = time.ctime(ready)
 
     if request.POST:
+        # Extract customer info from POST request
         name = request.POST['name']
         phone = request.POST['phone']
         email = request.POST['email']
 
+        # Get list of ordered items (checkboxes can produce multiple values)
         items = request.POST.getlist('item')
+
+        # Compute total cost by summing item prices
         total = 0
         for item in items:
             total += pricing[item]
         
+        # Extract allergies and special instructions
         allergies = request.POST['allergies']
         instructions = request.POST['instructions']
 
-
+        # Bundle all data into context to send to confirmation template
         context = {
             'name': name,
             'phone': phone,

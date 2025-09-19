@@ -5,9 +5,11 @@
 
     {% block content %}
     <div>
+         <!-- Main form that submits order details to the confirmation page -->
         <form action="{% url 'confirmation_page' %}" method="POST"> 
             {% csrf_token %}
 
+            <!-- Section for collecting personal information -->
             <h3> Personal Information </h3>
             <div class="menu">
                 Name: <input type="text" name="name">
@@ -15,12 +17,15 @@
                 Email: <input type="text" name="email">
             </div>
 
+            <!-- Menu options with prices -->
             <h3> Menu </h3>
             <ul>
+
                 <li>
                     <input type="checkbox" name="item" value="House Steamed Crab">
                     House Steamed Crab ($38)
                 </li>
+
                 <li>
                     La-Zi Chicken ($21)
                     <ul>
@@ -38,27 +43,34 @@
                         </li>
                     </ul>
                 </li>
+
                 <li>
                     <input type="checkbox" name="item" value="Hot Spicy Pork Kidney">
                     Hot Spicy Pork Kidney ($24)
                 </li>
+
                 <li>
                     <input type="checkbox" name="item" value="Ma-La Lobster">
                     Ma-La Lobster ($47)
                 </li>
+
             </ul>
+
+            <!-- Daily or rotating special menu item -->
             <h3> Current Special ($10)</h3>
             <input type="checkbox" name="item" value="Special">
             {{special}}
 
+            <!-- Section for allergy information -->
             <h3> Allergies </h3>
             <textarea name="allergies" rows="2" cols="50" style="max-width: 100%"></textarea>
 
+            <!-- Section for any extra instructions -->
             <h3> Special Instructions </h3>
             <textarea name="instructions" rows="2" cols="50" style="max-width: 100%"></textarea>
 
+            <!-- Submit button -->
             <h4> Ready to Order! </h4>
-
             <input type="submit">
 
         </form>
