@@ -1,0 +1,25 @@
+{% load static %}
+<html>
+<head>
+    <title>Mini Insta</title>
+    <link rel="stylesheet" href="{% static 'mini_insta.css' %}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'show_all_profiles' %}">Home</a></li>
+        </ul>
+    </nav>
+
+    <div class="wrapper">
+        <h1>Mini Insta</h1>
+        {% block content %}
+        
+        {% endblock %}
+    </div>
+
+    <footer>
+        Created by Evren Yaman.
+    </footer>
+</body>
+</html>
