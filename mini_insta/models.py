@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Profile(models.Model):
-    '''Encapsulate the data of a blog Article by an author'''
+    '''Encapsulate the data of a personal Profile by an user of the mini_insta app'''
 
     username = models.TextField(blank=True)
     display_name = models.TextField(blank=True)

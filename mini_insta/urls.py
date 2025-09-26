@@ -1,3 +1,7 @@
+# file: mini_insta/urls.py
+# Author: Evren Yaman (yamane@bu.edu), 9/26/2025
+# Description: extension of cs412 urls.py file, creating the paths for all pages used in the mini_insta web application.
+
 from django.urls import path
 from .views import ProfileListView, ProfileDetailView
 
