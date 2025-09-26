@@ -1,0 +1,205 @@
+/* File: styles.css */
+/* Author: Evren Yaman */
+
+/* ---------- Base page ---------- */
+html, body { height: 100%; }
+* { box-sizing: border-box; }
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.6;
+
+  width: 96vw;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+/* ---------- Navigation bar ---------- */
+nav {
+  background-color: #eaf2ff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 12px 14px;
+  text-align: right;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-radius: 0 0 12px 12px;
+  margin-top: 10px;
+}
+nav ul { margin: 0; padding: 0; }
+nav li { display: inline-block; margin-left: 16px; list-style: none; }
+nav a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color .2s, color .2s, transform .06s;
+}
+nav a:hover {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* ---------- Main wrapper ---------- */
+.wrapper {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 22px;
+  margin: 16px 0 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  flex: 1;
+}
+
+/* ---------- Headings ---------- */
+h1 {
+  text-align: center;
+  color: #1d4ed8;
+  background-color: #e0f2fe;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: 0 0 18px 0;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background-color: #eaf2ff;
+  color: #1d4ed8;
+  text-align: center;
+  padding: 12px;
+  border-top: 1px solid #e2e8f0;
+  border-radius: 12px 12px 0 0;
+  font-size: 0.95em;
+  margin-top: auto;
+}
+
+/* ---------- All Profiles ---------- */
+.profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+  margin-top: 8px;
+}
+
+/* Card is an <a> element */
+.profile-card {
+  display: grid;
+  place-items: center;
+  text-align: center;
+
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px 16px 16px;
+  text-decoration: none;         /* no underline */
+  color: inherit;                /* inherit text colors */
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform .08s, box-shadow .2s, border-color .2s;
+}
+.profile-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.10);
+  border-color: #cbd5e1;
+}
+.profile-card:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+/* Uniform square thumbnails */
+.profile-thumb {
+  width: 150px;
+  height: 150px;
+  border-radius: 14px;
+  object-fit: cover;
+  display: inline-block;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.profile-username {
+  margin: 12px 0 6px;
+  color: #2563eb;
+  font-weight: 700;
+}
+.profile-name {
+  margin: 0 0 6px;
+  color: #1e293b;                /* slate-800 */
+  font-size: 1.05rem;
+}
+
+/* ---------- Single Profile (detail page) ---------- */
+.profile-detail { margin-top: 6px; }
+.profile-hero {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.profile-portrait {
+  width: 280px;
+  height: 280px;
+  border-radius: 16px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.profile-meta .profile-name {
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  margin: 0 0 6px 0;
+}
+.profile-meta .profile-username {
+  margin: 0 0 12px 0;
+  font-weight: 700;
+  color: #2563eb;
+}
+.profile-bio { margin: 8px 0 16px; color: #334155; }
+
+/* Back button on detail page */
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  background-color: #e0f2fe;
+  color: #1d4ed8;
+  border: 1px solid #7dd3fc;
+  transition: transform .06s, background-color .2s, box-shadow .2s;
+}
+.btn:hover {
+  background-color: #bae6fd;
+  transform: translateY(-1px);
+}
+.btn.btn-secondary {
+  background-color: #e2e8f0;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .profile-hero {
+    grid-template-columns: 220px 1fr;
+    gap: 22px;
+  }
+  .profile-portrait { width: 220px; height: 220px; }
+}
+
+@media (max-width: 640px) {
+  body { width: 98vw; padding: 0 8px; }
+  nav { text-align: left; }
+  .profile-hero {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+}
