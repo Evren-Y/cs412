@@ -1,0 +1,42 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block title %}
+    Post by {{ post.profile.display_name }}
+{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+  <article>
+    <header class="profile-meta">
+      <h2 class="profile-name">{{ post.profile.display_name }}</h2>
+      <p class="profile-username">{{ post.profile.username }}</p>
+      <p class="profile-bio">{{ post.caption }}</p>
+      <p class="post-time"><time datetime="{{ post.timestamp|date:'c' }}">{{ post.timestamp }}</time></p>
+    </header>
+
+    <section>
+      <div class="profiles-grid">
+        {% for photo in post.get_all_photos %}
+          <img
+            src="{{ photo.image_url }}"
+            alt="Photo from post {{ post.id }}"
+            class="profile-thumb"
+          >
+        {% empty %}
+          <img
+            src="https://tse1.mm.bing.net/th/id/OIP.XXWKhZZeWjrUPx-ZSfP0GAHaDt?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+            alt="No images available"
+            class="profile-thumb"
+          >
+        {% endfor %}
+      </div>
+    </section>
+
+    <footer>
+      <a href="{% url 'profile' post.profile.id %}" class="btn btn-secondary">
+        ← Back to {{ post.profile.display_name }}’s profile
+      </a>
+    </footer>
+  </article>
+</div>
+{% endblock %}

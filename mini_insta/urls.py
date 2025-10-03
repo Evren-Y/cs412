@@ -3,9 +3,10 @@
 # Description: extension of cs412 urls.py file, creating the paths for all pages used in the mini_insta web application.
 
 from django.urls import path
-from .views import ProfileListView, ProfileDetailView
+from .views import *
 
 urlpatterns = [
     path('', ProfileListView.as_view(), name="show_all_profiles"),
     path('profile/<int:pk>/', ProfileDetailView.as_view(), name='profile'),
+    path('post/<int:pk>/', PostDetailView.as_view(), name='post'),
 ]

@@ -25,4 +25,33 @@
         </div>
     </div>
 </article>
+
+<section class="profile-posts">
+  <h3>Posts</h3>
+
+  <div class="profiles-grid">
+    {% for post in profile.get_all_posts %}
+
+      <a href="{% url 'post' post.id %}" class="profile-card">
+        {% if post.get_all_photos.first %}
+          <img
+            src="{{ post.get_all_photos.first.image_url }}"
+            alt="Post {{ post.id }} by {{ profile.display_name }}"
+            class="profile-thumb"
+          >
+        {% else %}
+          <img
+            src="https://tse1.mm.bing.net/th/id/OIP.XXWKhZZeWjrUPx-ZSfP0GAHaDt?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+            alt="No image available"
+            class="profile-thumb"
+          >
+        {% endif %}
+      </a>
+
+    {% empty %}
+      <p class="no-posts">No posts yet.</p>
+    {% endfor %}
+  </div>
+</section>
+
 {% endblock %}
