@@ -5,7 +5,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView
 from .models import *
-# from .forms import CreateProfileForm
+from .forms import CreatePostForm
 # Create your views here.
 
 class ProfileListView(ListView):
@@ -29,8 +29,39 @@ class PostDetailView(DetailView):
     template_name = "mini_insta/show_post.html"
     context_object_name = "post"
 
-#class CreateProfileView(CreateView):
-#    ''' '''
+class CreatePostView(CreateView):
+    ''' A view for creating a new Post associated with a given Profile. '''
 
-#    form_class = CreateProfileForm
-#    template_name = "mini_insta/create_profile_form.html"
+    form_class = CreatePostForm
+    template_name = "mini_insta/create_post_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # get the profile from the URL pk
+        pk = self.kwargs['pk']
+        profile = Profile.objects.get(pk=pk)
+        # add profile into context so template can use {{ profile }}
+        context['profile'] = profile
+        return context
+    
+    def form_valid(self, form):
+        # look up the Profile by pk from the URL
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+
+        # attach the Profile to the Post BEFORE saving to avoid NOT NULL error
+        form.instance.profile = profile
+
+        # save the Post
+        response = super().form_valid(form)
+
+        # also create a Photo for this post if an image_url was submitted
+        image_url = self.request.POST.get('image_url')
+        if image_url:
+            Photo.objects.create(post=self.object, image_url=image_url)
+
+        return response
+    
+    #redirect after submitting the form
+    def get_success_url(self):
+        from django.urls import reverse
+        return reverse('post', args=[self.object.pk])

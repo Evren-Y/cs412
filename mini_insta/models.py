@@ -1,3 +1,7 @@
+# file: mini_insta/models.py
+# Author: Evren Yaman (yamane@bu.edu), 10/3/2025
+# Description: Models for the database.
+
 from django.db import models
 
 # Create your models here.
@@ -11,34 +15,37 @@ class Profile(models.Model):
     profile_image_url = models.URLField(blank=True)
 
     def __str__(self):
+        ''' Return a readable string showing the display name and bio snippet. '''
         return f'{self.bio_text} by {self.display_name}'
     
     def get_all_posts(self):
-        ''' '''
+        ''' Return all Post objects associated with this Profile, ordered by most recent timestamp first. '''
         posts = Post.objects.filter(profile=self)
         return posts.order_by('-timestamp')
 
 class Post(models.Model):
-    ''' '''
+    ''' Represents a single post created by a Profile. '''
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     caption = models.TextField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        ''' Return a readable string showing the caption and profile username. '''
         return f'{self.caption} by {self.profile.username}'
 
     def get_all_photos(self):
-        ''' '''
+        ''' Return all Photo objects associated with this Post, ordered by most recent timestamp first. '''
         photos = Photo.objects.filter(post=self)
         return photos.order_by('-timestamp')
     
 class Photo(models.Model):
-    ''' '''
+    ''' Represents an image attached to a Post. '''
 
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+        ''' Return a readable string showing the image URL and username of owner. '''
         return f'{self.image_url} by {self.post.profile.username}'

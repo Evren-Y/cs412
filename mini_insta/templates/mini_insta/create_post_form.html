@@ -1,0 +1,27 @@
+<!-- File: create_post_form.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 10/3/2025 -->
+<!-- Description: Extends base.html; Shows a form to create a new post attached to the current profile -->
+
+
+{% extends 'mini_insta/base.html' %}
+
+{% block title %}Create Post{% endblock %}
+
+{% block content %}
+<h2>Create a Post{% if profile %} for {{ profile.username }}{% endif %}</h2>
+
+<form method="POST" action="{% url 'create_post' profile.pk %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn">Create Post</button>
+  {% if profile %}
+    <a href="{% url 'profile' profile.pk %}" class="btn btn-secondary">Cancel</a>
+  {% else %}
+    <a href="{% url 'show_all_profiles' %}" class="btn btn-secondary">Cancel</a>
+  {% endif %}
+</form>
+{% endblock %}
+
+
+
+
