@@ -6,12 +6,7 @@ from django import forms
 from .models import *
 
 class CreatePostForm(forms.ModelForm):
-    ''' '''
-
-    image_url = forms.URLField(
-        required=False,
-        label="Image URL"
-    )
+    ''' Form for creating a new Post with caption only. '''
 
     class Meta:
         '''associate this form with a model from our database'''

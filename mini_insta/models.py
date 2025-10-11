@@ -45,7 +45,22 @@ class Photo(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
+    image_file = models.ImageField(blank=True)
+
+    def get_image_url(self):
+        ''' Return the URL of the image. '''
+
+        if self.image_url:
+            return self.image_url
+        elif self.image_file:
+            return self.image_file.url
+        return None
 
     def __str__(self):
         ''' Return a readable string showing the image URL and username of owner. '''
-        return f'{self.image_url} by {self.post.profile.username}'
+
+        if self.image_url:
+            return f'{self.image_url} by {self.post.profile.username}'
+        elif self.image_file:
+            return f'{self.image_file.name} by {self.post.profile.username}'
+        return "No image"

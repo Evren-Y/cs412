@@ -10,16 +10,29 @@
 {% block content %}
 <h2>Create a Post{% if profile %} for {{ profile.username }}{% endif %}</h2>
 
-<form method="POST" action="{% url 'create_post' profile.pk %}">
+<form method="POST" action="{% url 'create_post' profile.pk %}" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
+   <p>
+    <label for="image_files">Upload Image(s):</label><br>
+    <input 
+      type="file" 
+      id="image_files" 
+      name="image_files" 
+      multiple accept="image/*"
+    >
+  </p>
+
   <button type="submit" class="btn">Create Post</button>
+
   {% if profile %}
     <a href="{% url 'profile' profile.pk %}" class="btn btn-secondary">Cancel</a>
   {% else %}
     <a href="{% url 'show_all_profiles' %}" class="btn btn-secondary">Cancel</a>
   {% endif %}
+
 </form>
+
 {% endblock %}
 
 

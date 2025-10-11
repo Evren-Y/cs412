@@ -35,7 +35,7 @@
       <a href="{% url 'post' post.id %}" class="profile-card">
         {% if post.get_all_photos.first %}
           <img
-            src="{{ post.get_all_photos.first.image_url }}"
+            src="{{ post.get_all_photos.first.get_image_url }}"
             alt="Post {{ post.id }} by {{ profile.display_name }}"
             class="profile-thumb"
           >
