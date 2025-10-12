@@ -21,6 +21,7 @@
             <h2 class="profile-name">{{ profile.display_name }}</h2>
             <p class="profile-username">{{ profile.username }}</p>
             <p class="profile-bio">{{ profile.bio_text }}</p>
+            <a href="{% url 'update_profile' profile.pk %}" class="btn btn-secondary">Update Profile</a>
             <a href="{% url 'show_all_profiles' %}" class="btn btn-secondary">← Back to all profiles</a>
         </div>
     </div>

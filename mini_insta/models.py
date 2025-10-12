@@ -3,6 +3,7 @@
 # Description: Models for the database.
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Profile(models.Model):
@@ -22,6 +23,9 @@ class Profile(models.Model):
         ''' Return all Post objects associated with this Profile, ordered by most recent timestamp first. '''
         posts = Post.objects.filter(profile=self)
         return posts.order_by('-timestamp')
+    def get_absolute_url(self):
+        """Return the URL for this Profile’s detail page."""
+        return reverse('profile', args=[str(self.pk)])
 
 class Post(models.Model):
     ''' Represents a single post created by a Profile. '''

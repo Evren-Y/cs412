@@ -3,9 +3,9 @@
 # Description: Class-based views for listing all Profile records and showing a single Profile detail page.
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from .models import *
-from .forms import CreatePostForm
+from .forms import CreatePostForm, UpdateProfileForm
 # Create your views here.
 
 class ProfileListView(ListView):
@@ -69,3 +69,10 @@ class CreatePostView(CreateView):
     def get_success_url(self):
         from django.urls import reverse
         return reverse('post', args=[self.object.pk])
+
+class UpdateProfileForm(UpdateView):
+    ''' '''
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = "mini_insta/update_profile_form.html"
+

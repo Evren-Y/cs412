@@ -1,0 +1,42 @@
+<!-- File: update_profile_form.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 10/11/2025 -->
+<!-- Description: Extends base.html; Shows a form to update an existing profile -->
+
+
+{% extends 'mini_insta/base.html' %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+<h2>Update Profile for {{ profile.username }}</h2>
+
+<form method="POST" action="{% url 'update_profile' profile.pk %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>
+        <label for="id_display_name">Display Name:</label><br>
+        {{ form.display_name }}
+    </p>
+
+    <p>
+        <label for="id_bio_text">Bio:</label><br>
+        {{ form.bio_text }}
+    </p>
+
+    <p>
+        <label for="id_profile_image_url">Profile Image URL:</label><br>
+        {{ form.profile_image_url }}
+    </p>
+
+    <button type="submit" class="btn">Save Changes</button>
+
+    <form action="{% url 'profile' profile.pk %}" method="GET">
+        <input type="submit" value="Cancel" class="btn btn-secondary">
+    </form>
+
+</form>
+
+{% endblock %}
+
+
+
+
