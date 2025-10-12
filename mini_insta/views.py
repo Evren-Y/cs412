@@ -3,9 +3,10 @@
 # Description: Class-based views for listing all Profile records and showing a single Profile detail page.
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import *
 from .forms import CreatePostForm, UpdateProfileForm
+from django.urls import reverse
 # Create your views here.
 
 class ProfileListView(ListView):
@@ -70,9 +71,43 @@ class CreatePostView(CreateView):
         from django.urls import reverse
         return reverse('post', args=[self.object.pk])
 
-class UpdateProfileForm(UpdateView):
-    ''' '''
+class UpdateProfileView(UpdateView):
+    ''' A view to render a form which will update the current Profile. '''
+
     model = Profile
     form_class = UpdateProfileForm
     template_name = "mini_insta/update_profile_form.html"
 
+class DeletePostView(DeleteView):
+    ''' A view for deleting Posts made by a Profile. '''
+
+    model = Post
+    template_name = "mini_insta/delete_post_form.html"
+
+    def get_context_data(self, **kwargs):
+        ''' Provides the Post being deleted and the profile associated as context. '''
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        context['post'] = post
+        context['profile'] = post.profile
+        return context
+    
+    def get_success_url(self):
+        ''' Redirect to the Profile page of the Post you just deleted. '''
+        return reverse('profile', args=[str(self.object.profile.pk)])
+
+class UpdatePostView(UpdateView):
+    ''' Update a Post's caption and redirect back to the post detail page. '''
+
+    model = Post
+    fields = ['caption']
+    template_name = "mini_insta/update_post_form.html"
+    context = "post"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['profile'] = self.object.profile
+        return context
+
+    def get_success_url(self):
+        return reverse('post', args=[str(self.object.pk)])

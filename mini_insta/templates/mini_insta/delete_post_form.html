@@ -1,0 +1,33 @@
+<!-- File: mini_insta/delete_post_form.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 10/12/2025 -->
+<!-- Description: Confirm/cancel delete for a Post. -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block title %} Delete Post {% endblock %}
+
+{% block content %}
+
+<h2>Delete Post</h2>
+
+<article class="post">
+  <p><strong>Posted by:</strong> {{ profile.display_name }} ({{ profile.username }})</p>
+  <p><strong>Caption:</strong> {{ post.caption }}</p>
+  <p><strong>Date:</strong> <time datetime="{{ post.timestamp|date:'c' }}">{{ post.timestamp }}</time></p>
+</article>
+
+<div class="actions" style="margin-top:1rem;">
+  <!-- Confirm delete -->
+  <form method="POST">
+    {% csrf_token %}
+    <input type="submit" value="Delete" class="btn btn-danger">
+  </form>
+
+  <!-- Cancel delete -->
+  <form method="GET" action="{% url 'profile' profile.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <input type="submit" value="Cancel" class="btn btn-secondary">
+  </form>
+</div>
+
+{% endblock %}

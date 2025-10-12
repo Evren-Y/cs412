@@ -45,6 +45,9 @@
     </section>
 
     <footer>
+      <a href="{% url 'update_post' post.pk %}" class="btn btn-secondary">Update</a>
+      <a href="{% url 'delete_post' post.pk %}" class="btn btn-danger">Delete</a>
+
       <a href="{% url 'profile' post.profile.id %}" class="btn btn-secondary">
         ← Back to {{ post.profile.display_name }}’s profile
       </a>

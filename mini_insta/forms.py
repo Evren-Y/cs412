@@ -23,6 +23,6 @@ class UpdateProfileForm(forms.ModelForm):
     ''' Form for updating an existing Profile '''
 
     class Meta:
-        ''' '''
+        ''' Links to the profile model '''
         model = Profile
         fields = ['display_name','bio_text','profile_image_url']
