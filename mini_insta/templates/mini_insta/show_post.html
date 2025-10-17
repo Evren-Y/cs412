@@ -15,12 +15,12 @@
       <h2 class="profile-name">{{ post.profile.display_name }}</h2>
       <p class="profile-username">{{ post.profile.username }}</p>
       {% with likes=post.get_likes %}
-        {% if likes == 0 %}
+        {% if likes|length == 0 %}
           <p>❤️ 0 likes</p>
-        {% elif likes == 1 %}
-          <p>❤️ Liked by {{ likes.0.profile.display_name }}</p>
+        {% elif likes|length == 1 %}
+          <p>❤️ Liked by {{ likes.0.profile.display_name|default:likes.0.profile.username }}</p>
         {% else %}
-          <p>❤️ Liked by {{ likes.0.profile.display_name }} and {{ likes|length|add:"-1" }} others</p>
+          <p>❤️ Liked by {{ likes.0.profile.display_name|default:likes.0.profile.username }} and {{ likes|length|add:"-1" }} others</p>
         {% endif %}
       {% endwith %}
       <p class="profile-bio">{{ post.caption }}</p>

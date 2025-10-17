@@ -126,3 +126,34 @@ class ShowFollowingDetailView(DetailView):
     model = Profile
     template_name = "mini_insta/show_following.html"
     context_object_name = "profile"
+
+class PostFeedListView(ListView):
+    ''' Feed of Posts from Profiles that this Profile follows. '''
+
+    model = Post
+    template_name = "mini_insta/show_feed.html"
+    context_object_name = "posts"
+
+    def get_queryset(self):
+        ''' Return Posts authored by Profiles that this Profile follows, newest first. '''
+        
+        pk = self.kwargs['pk']
+        try:
+            self.profile = Profile.objects.get(pk=pk)
+        except Profile.DoesNotExist:
+            # If profile not found, return an empty queryset
+            self.profile = None
+            return Post.objects.none()
+        return (
+            self.profile
+            .get_post_feed()
+            .select_related('profile')
+            .order_by('-timestamp')
+        )
+
+    def get_context_data(self, **kwargs):
+        ''' Provide the Profile object to the template as "profile". '''
+
+        context = super().get_context_data(**kwargs)
+        context['profile'] = self.profile
+        return context

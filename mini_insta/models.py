@@ -49,6 +49,26 @@ class Profile(models.Model):
         ''' Return the count of profiles this profile is following (int). '''
 
         return Follow.objects.filter(follower_profile=self).count()
+    
+    def get_post_feed(self):
+        ''' Return a QuerySet of Posts made by Profiles that this Profile follows,
+        ordered from newest to oldest. '''
+        
+        # Get all the Follow objects where this profile is the follower
+        following_rels = Follow.objects.filter(follower_profile=self)
+
+        # Extract the followed Profile objects (publishers)
+        followed_profiles = [f.profile for f in following_rels]
+
+        # If not following anyone, return an empty QuerySet
+        if not followed_profiles:
+            return Post.objects.none()
+
+        # Retrieve posts from those profiles
+        feed_posts = Post.objects.filter(profile__in=followed_profiles).order_by('-timestamp')
+
+        return feed_posts
+
 
 class Post(models.Model):
     ''' Represents a single post created by a Profile. '''

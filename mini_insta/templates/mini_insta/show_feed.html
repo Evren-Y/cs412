@@ -1,0 +1,99 @@
+<!-- File: mini_insta/show_feed.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 10/17/2025 -->
+<!-- Description: Displays a feed of Posts for a given Profile. -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block title %} Feed for {{ profile.display_name }}{% endblock %}
+
+{% block content %}
+<h2>Feed for {{ profile.display_name }}</h2>
+<p>
+  <a href="{% url 'profile' profile.pk %}" class="btn btn-secondary">← Back to Profile</a>
+</p>
+
+{% if posts %}
+  <div class="feed">
+    {% for post in posts %}
+      <article class="feed-post" style="margin-bottom:2rem;">
+        <!-- Post author header -->
+        <header class="feed-post-header" style="display:flex; align-items:center; gap:.75rem;">
+          {% if post.profile.profile_image_url %}
+            <img src="{{ post.profile.profile_image_url }}" alt="{{ post.profile.display_name }} avatar" style="width:40px; height:40px; border-radius:9999px; object-fit:cover;">
+          {% endif %}
+          <div>
+            <a href="{% url 'profile' post.profile.pk %}" class="author-name">
+              {{ post.profile.display_name|default:post.profile.username }}
+            </a>
+            <div class="muted" style="font-size:.85rem; color:#666;">
+              <time datetime="{{ post.timestamp|date:'c' }}">{{ post.timestamp }}</time>
+            </div>
+          </div>
+        </header>
+
+        <!-- First photo (if any) -->
+        <div class="feed-post-media" style="margin-top:.5rem;">
+          {% with first_photo=post.get_all_photos.first %}
+            {% if first_photo and first_photo.get_image_url %}
+              <a href="{% url 'post' post.pk %}">
+                <img src="{{ first_photo.get_image_url }}" alt="Post {{ post.pk }} image" style="width:100%; max-height:500px; object-fit:cover; border-radius:12px;">
+              </a>
+            {% endif %}
+          {% endwith %}
+        </div>
+
+        <!-- Caption -->
+        <p class="feed-post-caption" style="margin:.5rem 0 0;">
+          {{ post.caption }}
+        </p>
+
+        <!-- Likes summary -->
+        <div class="feed-post-likes" style="margin:.25rem 0;">
+            {% with likes=post.get_likes %}
+                {% if likes|length == 0 %}
+                    <p>❤️ 0 likes</p>
+                {% elif likes|length == 1 %}
+                    <p>❤️ Liked by {{ likes.0.profile.display_name|default:likes.0.profile.username }}</p>
+                {% else %}
+                    <p>❤️ Liked by {{ likes.0.profile.display_name|default:likes.0.profile.username }} and {{ likes|length|add:"-1" }} others</p>
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <!-- Comments (show a few newest) -->
+        <section class="feed-post-comments" style="margin-top:.5rem;">
+          {% with comments=post.get_all_comments %}
+            <h4 style="margin:0 0 .25rem 0;">Comments ({{ comments|length }})</h4>
+            {% if comments %}
+              <ul style="list-style:none; padding:0; margin:0;">
+                {% for c in comments|slice:":3" %}
+                  <li style="margin-bottom:.35rem;">
+                    <a href="{% url 'profile' c.profile.pk %}">
+                      <strong>{{ c.profile.display_name }}</strong>
+                    </a>:
+                    {{ c.text }}
+                    <span class="muted" style="color:#666; font-size:.85rem;">
+                      • <time datetime="{{ c.timestamp|date:'c' }}">{{ c.timestamp }}</time>
+                    </span>
+                  </li>
+                {% endfor %}
+              </ul>
+              {% if comments > 3 %}
+                <p style="margin-top:.25rem;">
+                  <a href="{% url 'post' post.pk %}">View all comments →</a>
+                </p>
+              {% endif %}
+            {% else %}
+              <p class="muted" style="color:#666;">No comments yet.</p>
+            {% endif %}
+          {% endwith %}
+        </section>
+      </article>
+    {% endfor %}
+  </div>
+  
+{% else %}
+  <p>Your feed is empty. Follow some profiles to see their posts here.</p>
+{% endif %}
+
+{% endblock %}
