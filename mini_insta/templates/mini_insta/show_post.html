@@ -53,33 +53,34 @@
       </div>
     </section>
 
-    <section class="post-comments" style="margin-top:1rem;">
+    <section class="post-comments">
       <h3>Comments</h3>
 
       {% with comments=post.get_all_comments %}
         {% if comments %}
-          <ul class="comment-list">
+          <ul style="list-style:none; padding:0; margin:0;">
             {% for c in comments %}
-              <li class="comment-item" style="margin-bottom:0.75rem;">
-                <div class="comment-header" style="font-size:0.9rem;">
-                  <a href="{% url 'profile' c.profile.pk %}">
+              <li style="margin-bottom:0.75rem; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem;">
+                <div>
+                  <a href="{% url 'profile' c.profile.pk %}" class="profile-username">
                     {{ c.profile.display_name }}
                   </a>
-                  <span class="comment-time" style="color:#666;">
+                  <span class="profile-bio" style="font-size:0.85rem; color:#64748b;">
                     • <time datetime="{{ c.timestamp|date:'c' }}">{{ c.timestamp }}</time>
                   </span>
                 </div>
-                <p class="comment-text" style="margin:0.25rem 0 0;">
+                <p class="profile-bio" style="margin:0.25rem 0 0;">
                   {{ c.text }}
                 </p>
               </li>
             {% endfor %}
           </ul>
         {% else %}
-          <p class="no-comments">No comments yet.</p>
+          <p class="profile-bio" style="color:#64748b;">No comments yet.</p>
         {% endif %}
       {% endwith %}
     </section>
+
 
     <footer>
       <a href="{% url 'update_post' post.pk %}" class="btn btn-secondary">Update</a>

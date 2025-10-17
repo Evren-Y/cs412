@@ -1,0 +1,20 @@
+<!-- File: mini_insta/search.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 10/17/2025 -->
+<!-- Description: Plain HTML form to collect a search query (GET) -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<h2>Search</h2>
+
+<form method="GET" action="{% url 'search' profile.pk %}">
+  <p>
+    <label for="query">Search for profiles or posts:</label><br>
+    <textarea id="query" name="query" rows="3" style="width:min(700px,100%);" placeholder="Type a name, username, bio, or post caption…" required></textarea>
+  </p>
+  <button type="submit" class="btn">Search</button>
+  <a href="{% url 'profile' profile.pk %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

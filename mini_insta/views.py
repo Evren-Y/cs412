@@ -136,7 +136,7 @@ class PostFeedListView(ListView):
 
     def get_queryset(self):
         ''' Return Posts authored by Profiles that this Profile follows, newest first. '''
-        
+
         pk = self.kwargs['pk']
         try:
             self.profile = Profile.objects.get(pk=pk)
@@ -156,4 +156,57 @@ class PostFeedListView(ListView):
 
         context = super().get_context_data(**kwargs)
         context['profile'] = self.profile
+        return context
+    
+class SearchView(ListView):
+    ''' Search Profiles and Posts on behalf of a given Profile (pk in URL). '''
+
+    template_name = "mini_insta/search_results.html"
+    context_object_name = "posts"
+
+    def dispatch(self, request, *args, **kwargs):
+        ''' If no query is provided, render the search form; otherwise continue to results. '''
+
+        pk = self.kwargs['pk']
+        try:
+            self.profile = Profile.objects.get(pk=pk)
+        except Profile.DoesNotExist:
+            self.profile = None
+        self.query = request.GET.get("query", "").strip()
+
+        if not self.query:
+            # No query -> show the search form
+            return render(request, "mini_insta/search.html", {"profile": self.profile})
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        ''' Return Posts whose caption contains the query, newest first. '''
+
+        if not getattr(self, "query", ""):
+            return Post.objects.none()
+        return (
+            Post.objects
+            .filter(caption__icontains=self.query)
+            .select_related("profile")
+            .order_by("-timestamp")
+        )
+
+    def get_context_data(self, **kwargs):
+        ''' Add the searching profile, query, matching profiles, and posts to context. '''
+
+        context = super().get_context_data(**kwargs)
+
+        if self.query:
+            profiles_username = Profile.objects.filter(username__icontains=self.query)
+            profiles_display  = Profile.objects.filter(display_name__icontains=self.query)
+            profiles_bio      = Profile.objects.filter(bio_text__icontains=self.query)
+            matching_profiles = (profiles_username | profiles_display | profiles_bio).distinct().order_by("display_name", "username")
+        else:
+            matching_profiles = Profile.objects.none()
+
+        context['profile']  = self.profile
+        context['query']    = self.query
+        context['profiles'] = matching_profiles
+        context['posts']    = self.get_queryset()
         return context

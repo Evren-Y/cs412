@@ -21,15 +21,16 @@
             <h2 class="profile-name">{{ profile.display_name }}</h2>
             <p class="profile-username">{{ profile.username }}</p>
             <p class="profile-bio">{{ profile.bio_text }}</p>
-            <p class="social-stats">
-                <a href="{% url 'show_followers' profile.pk %}">
-                    <strong>{{ profile.get_num_followers }}</strong> Followers
-                </a>
-                &nbsp;•&nbsp;
-                <a href="{% url 'show_following' profile.pk %}">
-                    <strong>{{ profile.get_num_following }}</strong> Following
-                </a>
+            <p style="margin-top:10px;">
+              <a href="{% url 'show_followers' profile.pk %}" class="btn">
+                {{ profile.get_num_followers }} Followers
+              </a>
+              &nbsp;•&nbsp;
+              <a href="{% url 'show_following' profile.pk %}" class="btn">
+                {{ profile.get_num_following }} Following
+              </a>
             </p>
+
             <a href="{% url 'update_profile' profile.pk %}" class="btn btn-secondary">Update Profile</a>
             <a href="{% url 'show_all_profiles' %}" class="btn btn-secondary">← Back to all profiles</a>
         </div>

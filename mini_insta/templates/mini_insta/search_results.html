@@ -1,0 +1,84 @@
+{% extends 'mini_insta/base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+  <h1>Search Results</h1>
+
+  <!-- Refine search -->
+  <form method="GET" action="{% url 'search' profile.pk %}">
+    <p>
+      <label for="query">Refine your search:</label><br>
+      <textarea id="query" name="query" rows="2" required>{{ query }}</textarea>
+    </p>
+    <button type="submit" class="btn">Search</button>
+    <a href="{% url 'profile' profile.pk %}" class="btn btn-secondary">Back to Profile</a>
+  </form>
+</div>
+
+<!-- Profiles section -->
+<div class="wrapper">
+  <h2>Profiles matching “{{ query }}”</h2>
+
+  {% if profiles %}
+    <div class="profiles-grid">
+      {% for p in profiles %}
+        <a href="{% url 'profile' p.pk %}" class="profile-card">
+          {% if p.profile_image_url %}
+            <img src="{{ p.profile_image_url }}" alt="{{ p.display_name|default:p.username }} avatar" class="profile-thumb">
+          {% else %}
+            <img src="https://tse1.mm.bing.net/th/id/OIP.XXWKhZZeWjrUPx-ZSfP0GAHaDt?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+                 alt="No avatar" class="profile-thumb">
+          {% endif %}
+          <p class="profile-username">@{{ p.username }}</p>
+          <p class="profile-name">{{ p.display_name|default:p.username }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="profile-bio">No matching profiles.</p>
+  {% endif %}
+</div>
+
+<!-- Posts section -->
+<div class="wrapper">
+  <h2>Posts matching “{{ query }}”</h2>
+
+  {% if posts %}
+    <div class="profiles-grid">
+      {% for post in posts %}
+        <a href="{% url 'post' post.pk %}" class="profile-card">
+          {% with first_photo=post.get_all_photos.first %}
+            {% if first_photo and first_photo.get_image_url %}
+              <img src="{{ first_photo.get_image_url }}" alt="Post {{ post.pk }} image" class="profile-thumb">
+            {% else %}
+              <img src="https://tse1.mm.bing.net/th/id/OIP.XXWKhZZeWjrUPx-ZSfP0GAHaDt?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+                   alt="No image" class="profile-thumb">
+            {% endif %}
+          {% endwith %}
+          <p class="profile-name">{{ post.profile.display_name|default:post.profile.username }}</p>
+          <p class="profile-username">@{{ post.profile.username }}</p>
+          <p class="profile-bio">{{ post.caption }}</p>
+
+          <div class="social-stats">
+            {% with likes=post.get_likes %}
+              {% if likes|length == 0 %}
+                ❤️ 0 likes
+              {% elif likes|length == 1 %}
+                ❤️ Liked by {{ likes.0.profile.display_name|default:likes.0.profile.username }}
+              {% else %}
+                ❤️ Liked by {{ likes.0.profile.display_name|default:likes.0.profile.username }} and {{ likes|length|add:"-1" }} others
+              {% endif %}
+            {% endwith %}
+            &nbsp;•&nbsp;
+            {{ post.get_all_comments|length }} comments
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="profile-bio">No matching posts.</p>
+  {% endif %}
+</div>
+{% endblock %}

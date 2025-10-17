@@ -4,26 +4,37 @@
 
 {% extends 'mini_insta/base.html' %}
 
-{% block title %} Followers of {{ profile.display_name}} {% endblock %}
+{% block title %}Followers of {{ profile.display_name }}{% endblock %}
 
 {% block content %}
-<h2>Followers of {{ profile.display_name }}</h2>
+<div class="wrapper">
+  <h1>Followers</h1>
+  <p class="profile-bio" style="margin-top:-6px;">
+    {{ profile.display_name|default:profile.username }} has
+    <strong>{{ profile.get_num_followers }}</strong> follower{% if profile.get_num_followers != 1 %}s{% endif %}.
+  </p>
 
-<p>Total followers: {{ profile.get_num_followers }}</p>
+  {% if profile.get_followers %}
+    <div class="profiles-grid">
+      {% for p in profile.get_followers %}
+        <a href="{% url 'profile' p.pk %}" class="profile-card">
+          {% if p.profile_image_url %}
+            <img src="{{ p.profile_image_url }}" alt="{{ p.display_name|default:p.username }} avatar" class="profile-thumb">
+          {% else %}
+            <img src="https://tse1.mm.bing.net/th/id/OIP.XXWKhZZeWjrUPx-ZSfP0GAHaDt?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"
+                 alt="No avatar" class="profile-thumb">
+          {% endif %}
+          <p class="profile-username">{{ p.username }}</p>
+          <p class="profile-name">{{ p.display_name|default:p.username }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="profile-bio">No followers yet.</p>
+  {% endif %}
 
-<ul class="profile-list">
-  {% for p in profile.get_followers %}
-    <li>
-      <a href="{% url 'profile' p.pk %}"> {{ p.display_name }} </a>
-      <span class="muted">{{ p.username }}</span>
-    </li>
-  {% empty %}
-    <li>No followers yet.</li>
-  {% endfor %}
-</ul>
-
-<p>
-  <a class="btn btn-secondary" href="{% url 'profile' profile.pk %}">← Back to Profile</a>
-</p>
-
+  <p style="margin-top:16px;">
+    <a href="{% url 'profile' profile.pk %}" class="btn btn-secondary">← Back to Profile</a>
+  </p>
+</div>
 {% endblock %}
