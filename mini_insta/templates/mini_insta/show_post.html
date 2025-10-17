@@ -14,6 +14,15 @@
     <header class="profile-meta">
       <h2 class="profile-name">{{ post.profile.display_name }}</h2>
       <p class="profile-username">{{ post.profile.username }}</p>
+      {% with likes=post.get_likes %}
+        {% if likes == 0 %}
+          <p>❤️ 0 likes</p>
+        {% elif likes == 1 %}
+          <p>❤️ Liked by {{ likes.0.profile.display_name }}</p>
+        {% else %}
+          <p>❤️ Liked by {{ likes.0.profile.display_name }} and {{ likes|length|add:"-1" }} others</p>
+        {% endif %}
+      {% endwith %}
       <p class="profile-bio">{{ post.caption }}</p>
       <p class="post-time"><time datetime="{{ post.timestamp|date:'c' }}">{{ post.timestamp }}</time></p>
     </header>
@@ -42,6 +51,34 @@
           >
         {% endfor %}
       </div>
+    </section>
+
+    <section class="post-comments" style="margin-top:1rem;">
+      <h3>Comments</h3>
+
+      {% with comments=post.get_all_comments %}
+        {% if comments %}
+          <ul class="comment-list">
+            {% for c in comments %}
+              <li class="comment-item" style="margin-bottom:0.75rem;">
+                <div class="comment-header" style="font-size:0.9rem;">
+                  <a href="{% url 'profile' c.profile.pk %}">
+                    {{ c.profile.display_name }}
+                  </a>
+                  <span class="comment-time" style="color:#666;">
+                    • <time datetime="{{ c.timestamp|date:'c' }}">{{ c.timestamp }}</time>
+                  </span>
+                </div>
+                <p class="comment-text" style="margin:0.25rem 0 0;">
+                  {{ c.text }}
+                </p>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="no-comments">No comments yet.</p>
+        {% endif %}
+      {% endwith %}
     </section>
 
     <footer>

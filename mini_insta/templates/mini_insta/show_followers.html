@@ -1,0 +1,29 @@
+<!-- File: mini_insta/show_followers.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 10/17/2025 -->
+<!-- Description: Lists all followers of a given Profile. -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block title %} Followers of {{ profile.display_name}} {% endblock %}
+
+{% block content %}
+<h2>Followers of {{ profile.display_name }}</h2>
+
+<p>Total followers: {{ profile.get_num_followers }}</p>
+
+<ul class="profile-list">
+  {% for p in profile.get_followers %}
+    <li>
+      <a href="{% url 'profile' p.pk %}"> {{ p.display_name }} </a>
+      <span class="muted">{{ p.username }}</span>
+    </li>
+  {% empty %}
+    <li>No followers yet.</li>
+  {% endfor %}
+</ul>
+
+<p>
+  <a class="btn btn-secondary" href="{% url 'profile' profile.pk %}">← Back to Profile</a>
+</p>
+
+{% endblock %}

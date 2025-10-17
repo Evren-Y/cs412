@@ -1,0 +1,28 @@
+<!-- File: mini_insta/show_following.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 10/17/2025 -->
+<!-- Description: Lists all profiles this Profile is following. -->
+
+{% extends 'mini_insta/base.html' %}
+
+{% block title %} Following by {{ profile.display_name }} {% endblock %}
+
+{% block content %}
+<h2> {{ profile.display_name }} is Following</h2>
+
+<p>Total following: {{ profile.get_num_following }}</p>
+
+<ul class="profile-list">
+  {% for p in profile.get_following %}
+    <li>
+      <a href="{% url 'profile' p.pk %}"> {{ p.display_name }} </a>
+      <span class="muted">@{{ p.username }}</span>
+    </li>
+  {% empty %}
+    <li>Not following anyone yet.</li>
+  {% endfor %}
+</ul>
+
+<p>
+  <a class="btn btn-secondary" href="{% url 'profile' profile.pk %}">← Back to Profile</a>
+</p>
+{% endblock %}

@@ -164,6 +164,17 @@ footer {
 }
 .profile-bio { margin: 8px 0 16px; color: #334155; }
 
+.social-stats a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.social-stats a:hover {
+  text-decoration: underline;
+}
+
+
 /* Back button on detail page */
 .btn {
   display: inline-block;
