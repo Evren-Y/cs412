@@ -73,6 +73,7 @@ class PlayerMatchStats(models.Model):
     
 
 class FavoritePlayer(models.Model):
+    '''An instance of an authenticated user's saved favorited players.'''
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

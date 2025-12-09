@@ -19,12 +19,11 @@ urlpatterns = [
     path("matches/<int:pk>/", MatchDetailView.as_view(), name="match_detail"),
     path("stats/<int:pk>/", PlayerMatchStatsDetailView.as_view(), name="stats_detail"),
     path("watchlist/", WatchlistView.as_view(), name="watchlist"),
-
     path("players/<int:pk>/favorite/", AddFavoriteView.as_view(), name="add_favorite"),
     path("players/<int:pk>/unfavorite/", RemoveFavoriteView.as_view(), name="remove_favorite"),
-
     path("fantasy/", FantasyHomeView.as_view(), name="fantasy_home"),
 
+    # user authentication/authorization
     path('login/', auth_views.LoginView.as_view(template_name='project/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout'),
     path('register/', UserRegistrationView.as_view(), name='register'),

@@ -1,3 +1,7 @@
+# file: project/views.py
+# Author: Evren Yaman (yamane@bu.edu), 12/09/2025
+# Description: View classes for the esports tracker app.
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,13 +16,15 @@ from .models import *
 
 
 class GameListView(ListView):
-    """Display all GameTitle objects."""
+    """Show a list of all GameTitle objects, with optional search by name."""
     
     model = GameTitle
     template_name = "project/game_list.html"
     context_object_name = "games"
 
     def get_queryset(self):
+        """Filter games by the 'q' query parameter if it is provided."""
+
         qs = super().get_queryset()
         q = self.request.GET.get("q")
         if q:
@@ -34,6 +40,8 @@ class GameDetailView(DetailView):
     context_object_name = "game"
 
     def get_context_data(self, **kwargs):
+        """Add this game's matches, optionally filtered by 'q', to the context."""
+
         context = super().get_context_data(**kwargs)
         game = self.object
         q = self.request.GET.get("q")
@@ -59,6 +67,8 @@ class PlayerListView(ListView):
     context_object_name = "players"
 
     def get_queryset(self):
+        """Filter players by 'q' if given (IGN, real name, team, region, game)."""
+
         qs = super().get_queryset()
         q = self.request.GET.get("q")
         if q:
@@ -72,6 +82,8 @@ class PlayerListView(ListView):
         return qs
     
     def get_context_data(self, **kwargs):
+        """Add a set of favorited player IDs for the current user to the context."""
+
         context = super().get_context_data(**kwargs)
         user = self.request.user
 
@@ -96,6 +108,8 @@ class PlayerDetailView(DetailView):
     context_object_name = "player"
 
     def get_context_data(self, **kwargs):
+        """Add favorite info and filtered stats for this player to the context."""
+
         context = super().get_context_data(**kwargs)
         user = self.request.user
 
@@ -129,6 +143,8 @@ class MatchListView(ListView):
     template_name = "project/match_list.html"
     
     def get_context_data(self, **kwargs):
+        """Filter matches by 'q' and split them into upcoming, live, and finished."""
+
         context = super().get_context_data(**kwargs)
         q = self.request.GET.get("q")
 
@@ -165,9 +181,13 @@ class PlayerMatchStatsDetailView(DetailView):
     context_object_name = "stats"
 
 class HomeView(TemplateView):
+    """Render the home page with information about the app and navigation links."""
+
     template_name = "project/home.html"
 
 class FantasyHomeView(TemplateView):
+    """Render the placeholder fantasy mode page (coming soon)."""
+
     template_name = "project/fantasy_home.html"
 
 class UserRegistrationView(CreateView):
@@ -179,15 +199,19 @@ class UserRegistrationView(CreateView):
     
     def get_success_url(self):
         '''The url to redirect to after creating a new User.'''
+
         return reverse('login')
     
 class WatchlistView(LoginRequiredMixin, ListView):
     """Show only the players that the current user has favorited."""
+
     model = ProPlayer
     template_name = "project/watchlist.html"
     context_object_name = "players"
 
     def get_queryset(self):
+        """Return the current user's favorited players, optionally filtered by 'q'."""
+
         qs = (
             ProPlayer.objects
             .filter(favorited_by__user=self.request.user)
@@ -205,7 +229,11 @@ class WatchlistView(LoginRequiredMixin, ListView):
         return qs
     
 class AddFavoriteView(LoginRequiredMixin, TemplateView):
+    """Add a player to the current user's favorites, then redirect back."""
+
     def dispatch(self, request, *args, **kwargs):
+        """Create a FavoritePlayer record for this user and player if it does not exist."""
+
         player_pk = kwargs.get("pk")
         player = ProPlayer.objects.filter(pk=player_pk).first()
 
@@ -218,7 +246,11 @@ class AddFavoriteView(LoginRequiredMixin, TemplateView):
 
         
 class RemoveFavoriteView(LoginRequiredMixin, TemplateView):
+    """Remove a player from the current user's favorites, then redirect back."""
+
     def dispatch(self, request, *args, **kwargs):
+        """Delete any FavoritePlayer record for this user and player, then redirect."""
+        
         player_pk = kwargs.get("pk")
         player = ProPlayer.objects.filter(pk=player_pk).first()
 
