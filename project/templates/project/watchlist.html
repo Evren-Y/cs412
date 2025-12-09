@@ -1,3 +1,9 @@
+<!-- File: project/watchlist.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 12/09/2025 -->
+<!-- Description: Displays the authenticated user's watchlist of favorited players. 
+     Supports search filtering by IGN, team, or game, and allows removal of players 
+     from the watchlist. -->
+     
 {% extends "project/base.html" %}
 
 {% block content %}
@@ -24,8 +30,6 @@
       {% for player in players %}
         <li class="player-card">
           <div class="player-card-header" style="display:flex; align-items:center; justify-content:space-between;">
-            
-            <!-- Player name -->
             <a href="{% url 'player_detail' player.pk %}">
               {{ player.ign }}
             </a>
