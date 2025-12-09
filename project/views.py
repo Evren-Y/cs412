@@ -172,6 +172,24 @@ class MatchDetailView(DetailView):
     template_name = "project/match_detail.html"
     context_object_name = "match"
 
+    def get_context_data(self, **kwargs):
+        """Add filtered player stats to context based on search query."""
+
+        context = super().get_context_data(**kwargs)
+        match = self.object
+
+        q = self.request.GET.get("q")
+        stats_qs = match.player_stats.all()
+
+        if q:
+            stats_qs = stats_qs.filter(
+                Q(player__ign__icontains=q) |
+                Q(map_name__icontains=q)
+            )
+
+        context["filtered_stats"] = stats_qs
+        context["query"] = q
+        return context
 
 class PlayerMatchStatsDetailView(DetailView):
     """Display stats for a single PlayerMatchStats record."""
@@ -250,7 +268,7 @@ class RemoveFavoriteView(LoginRequiredMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         """Delete any FavoritePlayer record for this user and player, then redirect."""
-        
+
         player_pk = kwargs.get("pk")
         player = ProPlayer.objects.filter(pk=player_pk).first()
 

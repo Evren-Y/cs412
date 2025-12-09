@@ -1,9 +1,8 @@
 <!-- File: project/match_detail.html -->
 <!-- Author: Evren Yaman (yamane@bu.edu), 12/09/2025 -->
-<!-- Description: Displays full details for a specific Match, including game info, date,
-     series format, scoreline, and all associated PlayerMatchStats. Provides navigation 
-     to related game and stats pages within the esports tracker app. -->
-     
+<!-- Description: Displays a single Match, its score, and player stats with
+     a search bar to filter stats by player name or map name. -->
+
 {% extends "project/base.html" %}
 
 {% block content %}
@@ -28,8 +27,25 @@
   </p>
 
   <h2 class="section-title">Player stats</h2>
+
+  <!-- SEARCH BAR FOR PLAYER STATS -->
+  <form method="get" class="search-bar">
+    <input
+      type="text"
+      name="q"
+      class="search-input"
+      placeholder="Search stats by player or map..."
+    >
+    <button type="submit" class="search-button">Search</button>
+
+    {% if query %}
+      <a href="{% url 'match_detail' match.pk %}" class="search-clear">Clear</a>
+    {% endif %}
+  </form>
+
+  <!-- USE filtered_stats HERE -->
   <ul class="item-list">
-    {% for stat in match.player_stats.all %}
+    {% for stat in filtered_stats %}
       <li>
         <a href="{% url 'stats_detail' stat.pk %}">
           {{ stat.player.ign }} – {{ stat.map_name }}:
@@ -37,7 +53,7 @@
         </a>
       </li>
     {% empty %}
-      <li>No player stats recorded for this match yet.</li>
+      <li>No player stats recorded for this match{% if query %} matching your search{% endif %}.</li>
     {% endfor %}
   </ul>
 
