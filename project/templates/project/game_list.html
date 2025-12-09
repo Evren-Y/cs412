@@ -1,0 +1,36 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+  <h1 class="page-title">Games</h1>
+
+    <form method="get" class="search-bar">
+      <input
+        type="text"
+        name="q"
+        class="search-input"
+        placeholder="Search games by name"
+      >
+      <button type="submit" class="search-button">Search</button>
+      {% if request.GET.q %}
+        <a href="{% url 'game_list' %}" class="search-clear">Clear</a>
+      {% endif %}
+    </form>
+
+  <ul class="item-list">
+    {% for game in games %}
+      <li>
+        <a href="{% url 'game_detail' game.pk %}">
+          {{ game.name }}
+        </a>
+        <div class="meta">
+          Region: {{ game.region }} |
+          Active: {{ game.active }}
+        </div>
+      </li>
+    {% empty %}
+      <li>No games found.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

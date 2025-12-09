@@ -1,0 +1,23 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+  <h1 class="page-title">Fantasy Mode (Coming Soon)</h1>
+
+  <p class="meta">
+    Here you’ll be able to draft a team of pro players and compete based on their
+    match stats (kills, deaths, assists, rating, etc.).
+  </p>
+
+  <h2 class="section-title">Planned features</h2>
+  <ul class="stats-list">
+    <li>Draft a fantasy team of <strong>ProPlayer</strong> instances.</li>
+    <li>Score teams using <strong>PlayerMatchStats</strong> (kills, assists, rating...).</li>
+    <li>Compare teams on a leaderboard.</li>
+  </ul>
+
+  <p class="back-link">
+    <a href="{% url 'home' %}">Back to home</a>
+  </p>
+</div>
+{% endblock %}

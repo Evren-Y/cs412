@@ -1,0 +1,75 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+  <h1 class="page-title">Matches</h1>
+
+  <form method="get" class="search-bar">
+    <input
+      type="text"
+      name="q"
+      class="search-input"
+      placeholder="Search matches by tournament, teams, or game..."
+    >
+    <button type="submit" class="search-button">Search</button>
+    {% if request.GET.q %}
+      <a href="{% url 'match_list' %}" class="search-clear">Clear</a>
+    {% endif %}
+  </form>
+
+  <!-- UPCOMING MATCHES -->
+  <h2 class="section-title">Upcoming Matches</h2>
+  <ul class="item-list">
+    {% for match in upcoming_matches %}
+      <li>
+        <a href="{% url 'match_detail' match.pk %}">
+          {{ match.tournament_name }} –
+          {{ match.team_one_name }} vs {{ match.team_two_name }}
+        </a>
+        <div class="meta">
+          {{ match.match_date }} | Game: {{ match.game.name }} | Status: {{ match.status }}
+        </div>
+      </li>
+    {% empty %}
+      <li>No upcoming matches.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- LIVE MATCHES -->
+  <h2 class="section-title">Live Matches</h2>
+  <ul class="item-list">
+    {% for match in live_matches %}
+      <li>
+        <a href="{% url 'match_detail' match.pk %}">
+          {{ match.tournament_name }} –
+          {{ match.team_one_name }} vs {{ match.team_two_name }}
+        </a>
+        <div class="meta">
+          {{ match.match_date }} | Game: {{ match.game.name }} | Status: {{ match.status }}
+        </div>
+      </li>
+    {% empty %}
+      <li>No live matches right now.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- FINISHED MATCHES -->
+  <h2 class="section-title">Finished Matches</h2>
+  <ul class="item-list">
+    {% for match in finished_matches %}
+      <li>
+        <a href="{% url 'match_detail' match.pk %}">
+          {{ match.tournament_name }} –
+          {{ match.team_one_name }} vs {{ match.team_two_name }}
+        </a>
+        <div class="meta">
+          {{ match.match_date }} | Game: {{ match.game.name }} | Status: {{ match.status }}
+        </div>
+      </li>
+    {% empty %}
+      <li>No finished matches recorded.</li>
+    {% endfor %}
+  </ul>
+
+</div>
+{% endblock %}

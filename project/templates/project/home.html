@@ -1,0 +1,72 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+
+  <h1 class="page-title">Welcome</h1>
+
+  <!-- ABOUT ME CARD -->
+  <div class="info-card">
+    <h2 class="section-title">About Me</h2>
+
+    <p>
+      I first got into <strong>CSGO</strong> around 2018, and it quickly became the game I
+      committed myself to for the next five to six years. I originally mained the AWP before
+      transitioning into rifling as my playstyle evolved and competition intensified.
+    </p>
+
+    <p>
+      Around <strong>2022–2023</strong>, I shifted into <strong>Valorant</strong> as the scene
+      grew. While I enjoy exploring many game genres, <strong>FPS titles have always been my
+      passion and strength</strong>. I love the fast-paced mechanics, strategic depth, and
+      rewarding skill expression that define them.
+    </p>
+
+    <p>
+      That same passion inspired me to build this <strong>Esports Stats Tracker</strong>. This app represents a tool
+      to display match and player performance data cleanly and meaningfully for the games I care
+      about most.
+    </p>
+
+    <p>
+      In the future, I plan to expand this into a full <strong>fantasy esports platform</strong>,
+      similar to fantasy football but tailored for games like CSGO and Valorant.
+    </p>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- ABOUT THE APP CARD -->
+  <div class="info-card">
+    <h2 class="section-title">About the App</h2>
+
+    <p>
+      This application is designed to track professional match data across esports titles such as
+      CSGO and Valorant. You can browse games, view players, explore match results, and analyze
+      detailed player statistics through a clean, unified interface.
+    </p>
+
+    <p>
+      Every page is connected using an intuitive navigation bar, allowing quick access to:
+    </p>
+
+    <ul class="item-list">
+      <li><a href="{% url 'game_list' %}">All tracked games</a></li>
+      <li><a href="{% url 'player_list' %}">Professional players</a></li>
+      <li><a href="{% url 'match_list' %}">Match results</a></li>
+      <li><a href="{% url 'fantasy_home' %}">Fantasy</a></li>
+    </ul>
+
+    <p>
+      The long-term goal is to allow users to <strong>draft teams, compete,
+      score points based on player performance, and climb leaderboards</strong>.
+    </p>
+
+    <p>
+      This is just the beginning, and the project will keep expanding with new features,
+      improved UI, and richer esports data.
+    </p>
+  </div>
+
+</div>
+{% endblock %}

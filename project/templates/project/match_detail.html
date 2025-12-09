@@ -1,0 +1,42 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+  <h1 class="page-title">{{ match.tournament_name }}</h1>
+
+  <p class="meta">
+    Game:
+    <a href="{% url 'game_detail' match.game.pk %}">
+      {{ match.game.name }}
+    </a><br>
+    Date: {{ match.match_date }}<br>
+    Format: Best of {{ match.best_of }}<br>
+    Status: {{ match.status }}
+  </p>
+
+  <h2 class="section-title">Score</h2>
+  <p>
+    {{ match.team_one_name }} {{ match.team_one_score }}
+    -
+    {{ match.team_two_score }} {{ match.team_two_name }}
+  </p>
+
+  <h2 class="section-title">Player stats</h2>
+  <ul class="item-list">
+    {% for stat in match.player_stats.all %}
+      <li>
+        <a href="{% url 'stats_detail' stat.pk %}">
+          {{ stat.player.ign }} – {{ stat.map_name }}:
+          {{ stat.kills }} / {{ stat.deaths }} / {{ stat.assists }}
+        </a>
+      </li>
+    {% empty %}
+      <li>No player stats recorded for this match yet.</li>
+    {% endfor %}
+  </ul>
+
+  <p class="back-link">
+    <a href="{% url 'match_list' %}">Back to matches</a>
+  </p>
+</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+  <h1 class="page-title">{{ game.name }}</h1>
+
+  <p class="meta">
+    Region: {{ game.region }}<br>
+    Active: {{ game.active }}
+  </p>
+
+  <h2 class="section-title">Matches for this game</h2>
+
+  <!-- SEARCH BAR FOR MATCHES -->
+  <form method="get" class="search-bar">
+    <input
+      type="text"
+      name="q"
+      class="search-input"
+      placeholder="Search matches by tournament, team, or status..."
+    >
+    <button type="submit" class="search-button">Search</button>
+
+    {% if request.GET.q %}
+      <a href="{% url 'game_detail' game.pk %}" class="search-clear">Clear</a>
+    {% endif %}
+  </form>
+
+  <ul class="item-list">
+    {% for match in matches %}
+      <li>
+        <a href="{% url 'match_detail' match.pk %}">
+          {{ match.tournament_name }}:
+          {{ match.team_one_name }} vs {{ match.team_two_name }}
+        </a>
+        <div class="meta">
+          {{ match.match_date }} |
+          Status: {{ match.status }}
+        </div>
+      </li>
+    {% empty %}
+      <li>No matches for this game{% if request.GET.q %} matching your search{% endif %}.</li>
+    {% endfor %}
+  </ul>
+
+  <p class="back-link">
+    <a href="{% url 'game_list' %}">Back to games</a>
+  </p>
+</div>
+{% endblock %}

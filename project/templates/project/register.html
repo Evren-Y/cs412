@@ -1,0 +1,43 @@
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="page-container">
+
+  <h1 class="page-title">Register for a New Account</h1>
+
+  <div class="info-card">
+
+    <form action="{% url 'register' %}" method="POST">
+      {% csrf_token %}
+
+      <!-- Render each field with styling -->
+      {% for field in form %}
+        <div class="form-row">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          
+          {% if field.errors %}
+          <ul class="errorlist">
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="search-button" style="margin-top:10px;">
+        Create Account
+      </button>
+    </form>
+
+    <div class="section-divider"></div>
+
+    <p style="font-size: 0.9rem;">
+      Already have an account?
+      <a href="{% url 'login' %}">Login here</a>.
+    </p>
+
+  </div>
+</div>
+{% endblock %}

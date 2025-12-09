@@ -1,0 +1,35 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+  <h1 class="page-title">
+    Stats: {{ stats.player.ign }} – {{ stats.map_name }}
+  </h1>
+
+  <p class="meta">
+    Match:
+    <a href="{% url 'match_detail' stats.match.pk %}">
+      {{ stats.match.tournament_name }}
+    </a><br>
+    Player:
+    <a href="{% url 'player_detail' stats.player.pk %}">
+      {{ stats.player.ign }}
+    </a>
+  </p>
+
+  <h2 class="section-title">Performance</h2>
+  <ul class="stats-list">
+    <li>Kills: {{ stats.kills }}</li>
+    <li>Deaths: {{ stats.deaths }}</li>
+    <li>Assists: {{ stats.assists }}</li>
+    <li>ACS: {{ stats.acs }}</li>
+    <li>Rating: {{ stats.rating }}</li>
+  </ul>
+
+  <p class="back-link">
+    <a href="{% url 'match_detail' stats.match.pk %}">
+      Back to match
+    </a>
+  </p>
+</div>
+{% endblock %}

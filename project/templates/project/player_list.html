@@ -1,0 +1,66 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+  <h1 class="page-title">Players</h1>
+
+  <form method="get" class="search-bar">
+    <input
+      type="text"
+      name="q"
+      class="search-input"
+      placeholder="Search players by IGN, team, region, or game..."
+    >
+    <button type="submit" class="search-button">Search</button>
+    {% if request.GET.q %}
+      <a href="{% url 'player_list' %}" class="search-clear">Clear</a>
+    {% endif %}
+  </form>
+
+  <ul class="player-grid">
+    {% for player in players %}
+      <li class="player-card">
+        <div class="player-card-header">
+          <a href="{% url 'player_detail' player.pk %}">
+            {{ player.ign }}
+          </a>
+
+          {% if request.user.is_authenticated %}
+            <form
+              method="post"
+              action="{% if player.id in favorite_ids %}
+                        {% url 'remove_favorite' player.pk %}
+                      {% else %}
+                        {% url 'add_favorite' player.pk %}
+                      {% endif %}"
+              style="display:inline;"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="favorite-button{% if not player.id in favorite_ids %} favorite-button--off{% endif %}"
+              >
+                {% if player.id in favorite_ids %}★{% else %}☆{% endif %}
+              </button>
+            </form>
+
+          {% endif %}
+
+        </div>
+
+        <div class="player-card-meta">
+          Team: {{ player.team_name|default:"N/A" }}<br>
+          Game: {{ player.game.name }}<br>
+          Region: {{ player.region|default:"N/A" }}
+        </div>
+
+        {% if player.image_file %}
+          <img src="{{ player.image_file.url }}" alt="{{ player.ign }}">
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>No players found.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

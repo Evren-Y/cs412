@@ -1,0 +1,84 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+
+  <!-- Header with IGN + Favorite/Unfavorite -->
+  <div style="display:flex; align-items:center; gap:8px;">
+    <h1 class="page-title" style="margin:0;">
+      {{ player.ign }}
+    </h1>
+
+    {% if request.user.is_authenticated %}
+      {% if player.id in favorite_ids %}
+        <!-- UNFAVORITE -->
+        <form method="post" action="{% url 'remove_favorite' player.pk %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="favorite-button" title="Unfavorite">
+            ★
+          </button>
+        </form>
+      {% else %}
+        <!-- FAVORITE -->
+        <form method="post" action="{% url 'add_favorite' player.pk %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="favorite-button favorite-button--off" title="Favorite">
+            ☆
+          </button>
+        </form>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  {% if player.image_file %}
+    <div>
+      <img src="{{ player.image_file.url }}" alt="{{ player.ign }}" style="max-width:200px;">
+    </div>
+  {% endif %}
+
+  <p class="meta">
+    Real name: {{ player.real_name }}<br>
+    Team: {{ player.team_name }}<br>
+    Region: {{ player.region }}<br>
+    Game:
+    <a href="{% url 'game_detail' player.game.pk %}">
+      {{ player.game.name }}
+    </a>
+  </p>
+
+  <h2 class="section-title">Match stats</h2>
+
+  <!-- SEARCH BAR FOR MATCH STATS -->
+  <form method="get" class="search-bar">
+    <input
+      type="text"
+      name="q"
+      class="search-input"
+      placeholder="Search match stats by tournament, map, or date..."
+    >
+    <button type="submit" class="search-button">Search</button>
+
+    {% if request.GET.q %}
+      <a href="{% url 'player_detail' player.pk %}" class="search-clear">Clear</a>
+    {% endif %}
+  </form>
+
+  <!-- FILTERED MATCH STATS LIST -->
+  <ul class="item-list">
+    {% for stat in filtered_stats %}
+      <li>
+        <a href="{% url 'stats_detail' stat.pk %}">
+          {{ stat.match.tournament_name }} – {{ stat.map_name }}:
+          {{ stat.kills }} / {{ stat.deaths }} / {{ stat.assists }}
+        </a>
+      </li>
+    {% empty %}
+      <li>No match stats found.</li>
+    {% endfor %}
+  </ul>
+
+  <p class="back-link">
+    <a href="{% url 'player_list' %}">Back to players</a>
+  </p>
+</div>
+{% endblock %}

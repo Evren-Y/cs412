@@ -1,0 +1,47 @@
+<!-- File: project/base.html -->
+<!-- Author: Evren Yaman (yamane@bu.edu), 12/09/2025 -->
+<!-- Description: Base template for the esports tracker app. Defines global layout,
+     navigation bar, static styling, and content blocks used throughout the site. -->
+
+{% load static %}
+<html>
+  <head>
+    <title>Project</title>
+    <link rel="stylesheet" href="{% static 'project.css' %}">
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="navbar-inner">
+        <div class="navbar-brand">
+          Esports Tracker
+        </div>
+        <ul class="navbar-links">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'game_list' %}">Games</a></li>
+          <li><a href="{% url 'player_list' %}">Players</a></li>
+          <li><a href="{% url 'match_list' %}">Matches</a></li>
+          <li><a href="{% url 'fantasy_home' %}">Fantasy</a></li>
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'watchlist' %}">Watchlist</a></li>
+          <hr>
+            <li>
+              <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="nav-logout-button">Logout</button>
+              </form>
+            </li>
+            <li>User: {{ request.user }}</li>
+          {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </header>
+
+    <div id="content">
+      {% block content %}
+      {% endblock %}
+    </div>
+    
+  </body>
+</html>

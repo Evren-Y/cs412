@@ -1,0 +1,61 @@
+{% extends "project/base.html" %}
+
+{% block content %}
+<div class="page-container">
+  <h1 class="page-title">Your Watchlist</h1>
+
+  <!-- SEARCH BAR -->
+  <form method="get" class="search-bar">
+    <input
+      type="text"
+      name="q"
+      class="search-input"
+      placeholder="Search your watchlist by IGN, team, or game..."
+    >
+    <button type="submit" class="search-button">Search</button>
+
+    {% if request.GET.q %}
+      <a href="{% url 'watchlist' %}" class="search-clear">Clear</a>
+    {% endif %}
+  </form>
+
+  {% if players %}
+    <ul class="player-grid">
+      {% for player in players %}
+        <li class="player-card">
+          <div class="player-card-header" style="display:flex; align-items:center; justify-content:space-between;">
+            
+            <!-- Player name -->
+            <a href="{% url 'player_detail' player.pk %}">
+              {{ player.ign }}
+            </a>
+
+            <!-- Remove-from-watchlist star -->
+            {% if request.user.is_authenticated %}
+              <form method="post" action="{% url 'remove_favorite' player.pk %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="favorite-button" title="Remove from watchlist">
+                  ★
+                </button>
+              </form>
+            {% endif %}
+
+          </div>
+
+          <div class="player-card-meta">
+            Team: {{ player.team_name|default:"N/A" }}<br>
+            Game: {{ player.game.name }}<br>
+            Region: {{ player.region|default:"N/A" }}
+          </div>
+
+          {% if player.image_file %}
+            <img src="{{ player.image_file.url }}" alt="{{ player.ign }}">
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No players match your search.</p>
+  {% endif %}
+</div>
+{% endblock %}
