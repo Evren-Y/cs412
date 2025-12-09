@@ -117,7 +117,7 @@ img {
 .navbar-links {
     list-style: none;
     display: flex;
-    gap: 26px;
+    gap: 20px;
     margin: 0;
     padding: 0;
 }
@@ -340,4 +340,38 @@ nav hr {
 
 input[value="Login"] {
     margin-top: 10px;
+}
+
+/* ---- RESPONSIVE NAVBAR ---- */
+
+@media screen and (max-width: 900px) {
+
+    /* Reduce spacing between nav links */
+    .navbar-links {
+        gap: 16px;
+    }
+
+    /* Reduce text size */
+    .navbar-links li a {
+        font-size: 0.7rem;
+    }
+    .navbar-links li {
+        font-size: 0.7rem;
+    }
+
+    /* Shrink the brand name slightly */
+    .navbar-brand {
+        font-size: 0.9rem;
+    }
+
+    /* Ensure everything fits on one row if possible */
+    .navbar-inner {
+        flex-wrap: wrap;     
+        gap: 6px;               /* tighter spacing */
+    }
+
+    /* Slight padding reduction for cleaner mobile look */
+    .navbar {
+        padding: 10px 0;
+    }
 }

@@ -15,7 +15,7 @@
     <form action="{% url 'login' %}" method="POST">
         {% csrf_token %}
 
-        <!-- Render fields individually so we can style them -->
+        <!-- Render fields individually for styling -->
         <div class="form-row">
           <label for="{{ form.username.id_for_label }}">Username</label>
           {{ form.username }}
@@ -27,8 +27,6 @@
         </div>
 
         <input type="submit" value="Login" class="search-button">
-
-        <!-- Keep your existing next handling -->
         {% if request.GET.next %}
           <input type="hidden" name="next" value="{{request.GET.next}}">
         {% else %}
